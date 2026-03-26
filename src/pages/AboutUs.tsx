@@ -1,4 +1,3 @@
-import AnnouncementBanner from '@/components/AnnouncementBanner';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useState } from 'react';
@@ -15,7 +14,6 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <AnnouncementBanner />
       <Navbar />
       
       <main className="pt-24 pb-20 md:pt-32 md:pb-32 px-4 md:px-8">
