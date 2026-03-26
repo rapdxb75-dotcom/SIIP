@@ -2,20 +2,20 @@ import aboutImage from '../assets/about-image.png';
 
 const BrandOriginSection = () => {
   return (
-    <section className="py-24 md:py-40 bg-background border-t border-border/50">
+    <section className="py-20 md:py-24 bg-background border-t border-border/50">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text SIDE */}
           <div className="order-2 lg:order-1 space-y-8 md:space-y-12">
             <div className="space-y-4">
               <span className="text-display text-[10px] md:text-xs tracking-[0.4em] text-primary uppercase font-bold">The SIIP Heritage</span>
-              <h2 className="text-display text-4xl md:text-6xl font-black tracking-tight leading-tight">
+              <h2 className="text-display text-3xl md:text-5xl font-black tracking-tight leading-tight">
                 OUR GENESIS<span className="text-primary">.</span>
               </h2>
             </div>
             
-            <div className="space-y-6 md:space-y-8 text-body text-base md:text-lg text-muted-foreground leading-relaxed">
-              <p className="border-l-2 border-primary/20 pl-6 italic">
+            <div className="space-y-4 md:space-y-6 text-body text-sm md:text-base text-muted-foreground leading-relaxed">
+              <p className="border-l border-primary/20 pl-6 italic">
                 I’m an assyrian proudly carrying a heritage so rich and groundbreaking that we’ve shaped the world: inventors of the written word, architects of early civilisations, contributors to humanity’s greatest leaps forward, all rooted in iraq as our enduring motherland. yet today, too few know our story. Our ancient language, steadfast faith, and living traditions passed from parent to child keep us unbreakable, and it’s time to reclaim that legacy for all to see.
               </p>
               

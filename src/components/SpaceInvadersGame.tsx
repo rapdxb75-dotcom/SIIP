@@ -43,6 +43,7 @@ const SpaceInvadersGame = () => {
     }
   }, [displayState.gameOver, displayState.won, displayState.score, bestScore]);
   const [soundOn, setSoundOn] = useState(true);
+  const soundOnRef = useRef(true);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const keysRef = useRef<Set<string>>(new Set());
   const [isManuallyPaused, setIsManuallyPaused] = useState(false);
@@ -67,7 +68,7 @@ const SpaceInvadersGame = () => {
   };
 
   const playSound = useCallback((type: 'shoot' | 'hit' | 'die' | 'win' | 'levelup' | 'bgm0' | 'bgm1' | 'bgm2' | 'bgm3') => {
-    if (!soundOn) return;
+    if (!soundOnRef.current) return;
     try {
       if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
       if (audioCtxRef.current.state === 'suspended') audioCtxRef.current.resume();
@@ -95,12 +96,19 @@ const SpaceInvadersGame = () => {
     } catch (err) {
       // Ignored
     }
-  }, [soundOn]);
+  }, []); // Remove soundOn dependency so it doesn't restart the closure
 
   const togglePause = () => {
     const next = !isManuallyPaused;
     setIsManuallyPaused(next);
     gameStateRef.current.paused = next;
+  };
+
+  const toggleSound = () => {
+    const next = !soundOn;
+    setSoundOn(next);
+    soundOnRef.current = next;
+    if (next) initAudio();
   };
 
 
@@ -115,16 +123,29 @@ const SpaceInvadersGame = () => {
     // Scale up slightly more for mobile so it's not "too small"
     const scale = isMobile ? Math.max(W / 240, 1.4) : Math.max(W / 400, 0.5);
 
+    // Contained gameplay area to match header
+    let containerBaseWidth = W;
+    if (W >= 1400) containerBaseWidth = 1400; // 2xl from config
+    else if (W >= 1280) containerBaseWidth = 1280; // xl
+    else if (W >= 1024) containerBaseWidth = 1024; // lg
+    else if (W >= 768) containerBaseWidth = 768; // md
+    else if (W >= 640) containerBaseWidth = 640; // sm
+
+    const totalPadding = isMobile ? 32 : 64; // matches px-4 and md:px-8
+    const gameAreaWidth = containerBaseWidth - totalPadding;
+    const gameAreaLeft = (W - gameAreaWidth) / 2;
+    const gameAreaRight = gameAreaLeft + gameAreaWidth;
+
     let currentLevel = 0;
 
     let playerX = W / 2;
     const playerW = 24 * scale;
     const playerH = 16 * scale;
     const playerY = H - (isMobile ? 80 * scale : 30 * scale);
-    const playerSpeed = 4 * scale;
+    const playerSpeed = (isMobile ? 4 : 3) * scale;
 
     let bullets: { x: number; y: number }[] = [];
-    const bulletSpeed = 6 * scale;
+    const bulletSpeed = 5 * scale;
     let lastShot = 0;
     const shotCooldown = 250;
 
@@ -137,12 +158,12 @@ const SpaceInvadersGame = () => {
       const enemyPadY = 8 * scale;
       const newEnemies: { x: number; y: number; alive: boolean; row: number }[] = [];
       const totalEnemyW = enemyCols * (enemyW + enemyPadX) - enemyPadX;
-      const startX = (W - totalEnemyW) / 2;
+      const startX = gameAreaLeft + (gameAreaWidth - totalEnemyW) / 2;
       for (let r = 0; r < enemyRows; r++) {
         for (let c = 0; c < enemyCols; c++) {
           newEnemies.push({
             x: startX + c * (enemyW + enemyPadX),
-            y: (isMobile ? 80 * scale : 40 * scale) + r * (enemyH + enemyPadY),
+            y: (isMobile ? 100 * scale : 80 * scale) + r * (enemyH + enemyPadY),
             alive: true,
             row: r,
           });
@@ -153,12 +174,16 @@ const SpaceInvadersGame = () => {
 
     let { enemies, enemyW, enemyH } = spawnEnemies(currentLevel);
     let enemyDir = 1;
-    let enemySpeed = (0.5 + (currentLevel - 1) * 0.2) * scale;
+    let enemySpeed = (0.3 + currentLevel * 0.15) * scale;
     let enemyDropTimer = 0;
 
     let enemyBullets: { x: number; y: number }[] = [];
     let enemyShootTimer = 0;
-    const getEnemyShootInterval = (level: number) => Math.max(30, 90 - level * 10);
+    const getEnemyShootInterval = (level: number) => {
+      const base = 100;
+      const reduction = level * 16;
+      return Math.max(level === MAX_LEVEL ? 10 : 20, base - reduction);
+    };
 
     gameStateRef.current = { score: 0, lives: 2, level: 0, gameOver: false, started: true, paused: isManuallyPaused, won: false };
     setDisplayState({ ...gameStateRef.current });
@@ -195,7 +220,12 @@ const SpaceInvadersGame = () => {
       }
     };
 
-    const loop = () => {
+    let lastTime = performance.now();
+    const loop = (timestamp: number) => {
+      const dt = Math.min(60, timestamp - lastTime); // Cap dt to avoid huge jumps
+      lastTime = timestamp;
+      const df = dt / 16.666; // Normalize to 60fps
+
       const gs = gameStateRef.current;
       if (gs.gameOver || gs.won) {
         setDisplayState({ ...gs });
@@ -208,18 +238,15 @@ const SpaceInvadersGame = () => {
 
       ctx.clearRect(0, 0, W, H);
 
-      // Background grid removed to show stars clearly
-
-
       const keys = keysRef.current;
-      if (keys.has('ArrowLeft') || keys.has('a') || moveLeftRef.current) playerX = Math.max(0, playerX - playerSpeed);
-      if (keys.has('ArrowRight') || keys.has('d') || moveRightRef.current) playerX = Math.min(W - playerW, playerX + playerSpeed);
+      if (keys.has('ArrowLeft') || keys.has('a') || moveLeftRef.current) playerX = Math.max(gameAreaLeft, playerX - playerSpeed * df);
+      if (keys.has('ArrowRight') || keys.has('d') || moveRightRef.current) playerX = Math.min(gameAreaRight - playerW, playerX + playerSpeed * df);
 
       if (touchXRef.current !== null) {
         const target = touchXRef.current - playerW / 2;
         const diff = target - playerX;
-        playerX += diff * 0.15;
-        playerX = Math.max(0, Math.min(W - playerW, playerX));
+        playerX += diff * 0.15 * df;
+        playerX = Math.max(gameAreaLeft, Math.min(gameAreaRight - playerW, playerX));
       }
 
       const now = Date.now();
@@ -230,13 +257,13 @@ const SpaceInvadersGame = () => {
         playSound('shoot');
       }
 
-      bullets = bullets.filter(b => { b.y -= bulletSpeed; return b.y > 0; });
+      bullets = bullets.filter(b => { b.y -= bulletSpeed * df; return b.y > 0; });
 
       let hitEdge = false;
       enemies.forEach(e => {
         if (!e.alive) return;
-        e.x += enemySpeed * enemyDir;
-        if (e.x <= 0 || e.x + enemyW >= W) hitEdge = true;
+        e.x += (enemySpeed * df) * enemyDir;
+        if (e.x <= gameAreaLeft || e.x + enemyW >= gameAreaRight) hitEdge = true;
       });
 
       if (hitEdge) {
@@ -249,7 +276,7 @@ const SpaceInvadersGame = () => {
       }
 
       const aliveCount = enemies.filter(e => e.alive).length;
-      bgmTimer++;
+      bgmTimer += df;
       const speed = Math.max(10, 60 - currentLevel * 5 - (enemies.length - aliveCount) * 0.8);
       if (bgmTimer >= speed) {
         bgmTimer = 0;
@@ -257,7 +284,7 @@ const SpaceInvadersGame = () => {
         playSound(`bgm${bgmStep}` as any);
       }
 
-      enemyShootTimer++;
+      enemyShootTimer += df;
       if (enemyShootTimer >= getEnemyShootInterval(currentLevel)) {
         const alive = enemies.filter(e => e.alive);
         if (alive.length > 0) {
@@ -267,7 +294,7 @@ const SpaceInvadersGame = () => {
         enemyShootTimer = 0;
       }
 
-      enemyBullets = enemyBullets.filter(b => { b.y += bulletSpeed * 0.5; return b.y < H; });
+      enemyBullets = enemyBullets.filter(b => { b.y += bulletSpeed * 0.5 * df; return b.y < H; });
 
       bullets = bullets.filter(b => {
         for (const e of enemies) {
@@ -276,8 +303,9 @@ const SpaceInvadersGame = () => {
             e.alive = false;
             gs.score += 10 * currentLevel;
             playSound('hit');
-            const aliveCount = enemies.filter(e => e.alive).length;
-            enemySpeed = (0.5 + (currentLevel - 1) * 0.2 + (enemies.length - aliveCount) * 0.05) * scale;
+            const speedMult = 0.3 + currentLevel * 0.15;
+            const killBoost = (enemies.length - aliveCount) * (0.04 + currentLevel * 0.02);
+            enemySpeed = (speedMult + killBoost) * scale;
             return false;
           }
         }
@@ -316,7 +344,8 @@ const SpaceInvadersGame = () => {
         enemies = spawned.enemies;
         enemyW = spawned.enemyW;
         enemyH = spawned.enemyH;
-        enemySpeed = (0.5 + (currentLevel - 1) * 0.2) * scale;
+        const initialSpeedMult = 0.3 + currentLevel * 0.15;
+        enemySpeed = initialSpeedMult * scale;
         enemyBullets = [];
         bullets = [];
       }
@@ -343,7 +372,37 @@ const SpaceInvadersGame = () => {
     const resize = () => {
       const w = container.clientWidth;
       const h = container.clientHeight;
-      if (w > 0 && h > 0) { canvas.width = w; canvas.height = h; }
+      if (w > 0 && h > 0) { 
+        canvas.width = w; 
+        canvas.height = h; 
+        if (!gameStateRef.current.started) {
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            const scale = w < 768 ? Math.max(w / 240, 1.4) : Math.max(w / 400, 0.5);
+            ctx.fillStyle = '#fff';
+            // Draw a quick static ship at bottom center
+            const p = 2 * scale;
+            const shipX = w / 2 - (24 * scale) / 2;
+            const shipY = h - (w < 768 ? 80 * scale : 30 * scale);
+            ctx.fillRect(shipX + (24 * scale) / 2 - p, shipY, p * 2, p);
+            ctx.fillRect(shipX + (24 * scale) / 2 - p * 2, shipY + p, p * 4, p);
+            ctx.fillRect(shipX, shipY + p * 2, 24 * scale, p * 2);
+            ctx.fillRect(shipX + p, shipY + p * 3, 24 * scale - p * 2, p * 2);
+            
+            // Draw a few static enemies
+            for (let r = 0; r < 3; r++) {
+              for (let c = 0; c < 6; c++) {
+                const ex = (w - (6 * 24 * scale)) / 2 + c * 24 * scale;
+                const ey = (w < 768 ? 100 * scale : 80 * scale) + r * 20 * scale;
+                ctx.fillRect(ex + p, ey, p * 6, p);
+                ctx.fillRect(ex, ey + p, p * 8, p);
+                ctx.fillRect(ex, ey + p * 2, p * 3, p);
+                ctx.fillRect(ex + p * 5, ey + p * 2, p * 3, p);
+              }
+            }
+          }
+        }
+      }
     };
     resize();
     const ro = new ResizeObserver(resize);
@@ -393,40 +452,38 @@ const SpaceInvadersGame = () => {
     <div className="relative w-full h-full">
       <canvas
         ref={canvasRef}
-        className="w-full h-full block bg-transparent"
+        className={`w-full h-full block bg-transparent transition-all duration-1000 ${!displayState.started ? 'blur-sm' : 'blur-0'}`}
       />
 
       {/* HUD */}
-      <div className="absolute top-16 left-4 right-4 flex justify-between items-start text-display text-xs text-primary-foreground pointer-events-none z-10">
-        <div className="flex flex-col gap-1">
-          <span>SCORE: {displayState.score}</span>
-          <span>BEST: {bestScore}</span>
-          <span>LVL {displayState.level}/{MAX_LEVEL}</span>
-        </div>
-        <div className="flex flex-col items-end gap-2">
-          <div className="flex gap-2 pointer-events-none mt-1">
-            {[...Array(2)].map((_, i) => (
-              <PixelShipSVG key={i} empty={i >= displayState.lives} />
-            ))}
+      <div className="absolute top-28 left-0 right-0 pointer-events-none z-10">
+        <div className="container mx-auto px-4 md:px-8 flex justify-between items-start text-display text-xs text-primary-foreground">
+          <div className="flex flex-col gap-1">
+            <span>SCORE: {displayState.score}</span>
+            <span>BEST: {bestScore}</span>
+            <span>LVL {displayState.level}/{MAX_LEVEL}</span>
           </div>
-          <div className="flex gap-3 mt-1">
-            <button
-              onClick={togglePause}
-              className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity flex items-center gap-1"
-            >
-              {isManuallyPaused ? <Play size={10} /> : <Pause size={10} />}
-              {isManuallyPaused ? 'PLAY' : 'PAUSE'}
-            </button>
-            <button
-              onClick={() => {
-                const next = !soundOn;
-                setSoundOn(next);
-                if (next) initAudio();
-              }}
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex gap-2 pointer-events-none mt-1">
+              {[...Array(2)].map((_, i) => (
+                <PixelShipSVG key={i} empty={i >= displayState.lives} />
+              ))}
+            </div>
+            <div className="flex gap-3 mt-1">
+              <button
+                onClick={togglePause}
+                className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity flex items-center gap-1"
+              >
+                {isManuallyPaused ? <Play size={10} /> : <Pause size={10} />}
+                {isManuallyPaused ? 'PLAY' : 'PAUSE'}
+              </button>
+              <button
+              onClick={toggleSound}
               className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity"
             >
               {soundOn ? '♪ ON' : '♪ OFF'}
             </button>
+            </div>
           </div>
         </div>
       </div>

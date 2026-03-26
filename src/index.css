@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -14,7 +18,7 @@
     --popover-foreground: 0 0% 4%;
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
-    --banner-height: 28px;
+    --banner-height: 40px;
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 94%;

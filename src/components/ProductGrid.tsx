@@ -1,6 +1,7 @@
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 import img1 from '../assets/1.png';
 import img2 from '../assets/2.png';
@@ -38,6 +39,7 @@ const ProductGrid = () => {
     slidesToScroll: 1,
     containScroll: 'trimSnaps',
   });
+  const { addToCart } = useCart();
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
 
@@ -55,7 +57,7 @@ const ProductGrid = () => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section id="products" className="py-20 md:py-32">
+    <section id="store" className="py-20 md:py-32">
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-end justify-between mb-8">
           <div>
@@ -107,7 +109,13 @@ const ProductGrid = () => {
                       {product.tag}
                     </span>
                   )}
-                  <div className="absolute inset-x-0 bottom-0 bg-foreground text-background text-display text-xs text-center py-2 translate-y-full group-hover:translate-y-0 transition-transform duration-200">
+                  <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
+                    className="absolute inset-x-0 bottom-0 bg-foreground text-background text-display text-xs text-center py-2 translate-y-full group-hover:translate-y-0 transition-transform duration-200"
+                  >
                     ADD TO CART
                   </div>
                 </div>
