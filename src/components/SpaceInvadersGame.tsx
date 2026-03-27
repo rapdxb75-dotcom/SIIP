@@ -177,6 +177,9 @@ const SpaceInvadersGame = () => {
     let enemySpeed = (0.3 + currentLevel * 0.15) * scale;
     let enemyDropTimer = 0;
 
+    let isRespawning = false;
+    let respawnTimer = 0;
+
     let enemyBullets: { x: number; y: number }[] = [];
     let enemyShootTimer = 0;
     const getEnemyShootInterval = (level: number) => {
@@ -237,6 +240,13 @@ const SpaceInvadersGame = () => {
       }
 
       ctx.clearRect(0, 0, W, H);
+
+      if (isRespawning) {
+        respawnTimer -= df;
+        if (respawnTimer <= 0) {
+          isRespawning = false;
+        }
+      }
 
       const keys = keysRef.current;
       if (keys.has('ArrowLeft') || keys.has('a') || moveLeftRef.current) playerX = Math.max(gameAreaLeft, playerX - playerSpeed * df);
@@ -313,10 +323,25 @@ const SpaceInvadersGame = () => {
       });
 
       enemyBullets = enemyBullets.filter(b => {
-        if (b.x >= playerX && b.x <= playerX + playerW && b.y >= playerY && b.y <= playerY + playerH) {
+        if (!isRespawning && b.x >= playerX && b.x <= playerX + playerW && b.y >= playerY && b.y <= playerY + playerH) {
           gs.lives--;
           playSound('die');
-          if (gs.lives <= 0) gs.gameOver = true;
+          if (gs.lives <= 0) {
+            gs.gameOver = true;
+          } else {
+            // Start respawn sequence
+            isRespawning = true;
+            respawnTimer = 180; // ~3 seconds at 60fps
+            playerX = W / 2 - playerW / 2;
+            
+            // Reset enemies for the new life
+            const spawned = spawnEnemies(currentLevel);
+            enemies = spawned.enemies;
+            enemyDir = 1;
+            enemyDropTimer = 0;
+            bullets = [];
+            enemyBullets = [];
+          }
           return false;
         }
         return true;
@@ -344,13 +369,18 @@ const SpaceInvadersGame = () => {
         enemies = spawned.enemies;
         enemyW = spawned.enemyW;
         enemyH = spawned.enemyH;
+        enemyDir = 1; // Reset direction
+        enemyDropTimer = 0; // Reset drop timer
         const initialSpeedMult = 0.3 + currentLevel * 0.15;
         enemySpeed = initialSpeedMult * scale;
         enemyBullets = [];
         bullets = [];
       }
 
-      drawPixelShip(playerX, playerY);
+      // Draw player ship
+      if (!isRespawning || Math.floor(respawnTimer / 10) % 2 === 0) {
+        drawPixelShip(playerX, playerY);
+      }
       enemies.forEach(e => { if (e.alive) drawEnemy(e.x, e.y, e.row); });
       ctx.fillStyle = '#fff';
       bullets.forEach(b => ctx.fillRect(b.x, b.y, 2 * scale, 6 * scale));
@@ -455,8 +485,8 @@ const SpaceInvadersGame = () => {
         className={`w-full h-full block bg-transparent transition-all duration-1000 ${!displayState.started ? 'blur-sm' : 'blur-0'}`}
       />
 
-      {/* HUD */}
-      <div className="absolute top-28 left-0 right-0 pointer-events-none z-10">
+      {/* HUD / gameplayInfo */}
+      <div className="gameplayInfo absolute top-[calc(6.5rem+env(safe-area-inset-top))] left-0 right-0 pointer-events-none z-10">
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-start text-display text-xs text-primary-foreground">
           <div className="flex flex-col gap-1">
             <span>SCORE: {displayState.score}</span>
@@ -538,9 +568,10 @@ const SpaceInvadersGame = () => {
 
       {/* Mobile fixed bottom controls */}
       {isMobile && displayState.started && !displayState.gameOver && !displayState.won && (
-        <div className="absolute bottom-12 left-0 right-0 flex items-center justify-between px-6 z-20 pointer-events-none">
+        <div className="absolute bottom-[calc(2.5rem+env(safe-area-inset-bottom))] left-0 right-0 flex items-center justify-between px-6 z-20 pointer-events-none">
           {/* Fire (Shoot) Button on the Left */}
           <button
+            id="shootButton"
             onPointerDown={(e) => { e.preventDefault(); shootRef.current = true; }}
             onPointerUp={() => { shootRef.current = false; }}
             onPointerLeave={() => { shootRef.current = false; }}
@@ -549,10 +580,9 @@ const SpaceInvadersGame = () => {
           >
             <Crosshair size={28} />
           </button>
-
-          {/* Movement Buttons on the Right */}
           <div className="flex items-center gap-3">
             <button
+              id="moveLeftButton"
               onPointerDown={(e) => { e.preventDefault(); moveLeftRef.current = true; }}
               onPointerUp={() => { moveLeftRef.current = false; }}
               onPointerLeave={() => { moveLeftRef.current = false; }}
@@ -561,8 +591,9 @@ const SpaceInvadersGame = () => {
             >
               <ChevronLeft size={24} />
             </button>
-
+ 
             <button
+              id="moveRightButton"
               onPointerDown={(e) => { e.preventDefault(); moveRightRef.current = true; }}
               onPointerUp={() => { moveRightRef.current = false; }}
               onPointerLeave={() => { moveRightRef.current = false; }}

@@ -2,14 +2,14 @@ import aboutImage from '../assets/about-image.png';
 
 const BrandOriginSection = () => {
   return (
-    <section className="py-20 md:py-24 bg-background border-t border-border/50">
+    <section className="py-12 md:py-16 bg-background border-t border-border/50">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Text SIDE */}
-          <div className="order-2 lg:order-1 space-y-8 md:space-y-12">
-            <div className="space-y-4">
+          <div className="lg:col-span-7 order-2 lg:order-1 space-y-6 md:space-y-8">
+            <div className="space-y-3">
               <span className="text-display text-[10px] md:text-xs tracking-[0.4em] text-primary uppercase font-bold">The SIIP Heritage</span>
-              <h2 className="text-display text-3xl md:text-5xl font-black tracking-tight leading-tight">
+              <h2 className="text-display text-2xl md:text-3xl font-black tracking-tight leading-tight">
                 OUR GENESIS<span className="text-primary">.</span>
               </h2>
             </div>
@@ -36,8 +36,8 @@ const BrandOriginSection = () => {
           </div>
 
           {/* IMAGE SIDE */}
-          <div className="order-1 lg:order-2 relative">
-            <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden group">
+          <div className="lg:col-span-5 order-1 lg:order-2 relative">
+            <div className="relative aspect-square md:aspect-[4/5] overflow-hidden group">
               <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-700" />
               <img 
                 src={aboutImage} 
@@ -46,9 +46,9 @@ const BrandOriginSection = () => {
               />
               <div className="absolute inset-0 border-[1px] border-foreground/10 z-20 m-4 pointer-events-none" />
             </div>
-            {/* Decorative elements */}
-            <div className="absolute -bottom-8 -left-8 w-24 h-24 border-l border-b border-primary/30 z-0 hidden md:block" />
-            <div className="absolute -top-8 -right-8 w-24 h-24 border-r border-t border-primary/30 z-0 hidden md:block" />
+            {/* Decorative elements - reduced size */}
+            <div className="absolute -bottom-4 -left-4 w-12 h-12 border-l border-b border-primary/30 z-0 hidden md:block" />
+            <div className="absolute -top-4 -right-4 w-12 h-12 border-r border-t border-primary/30 z-0 hidden md:block" />
           </div>
         </div>
       </div>

@@ -8,8 +8,8 @@ import { useCart } from '../context/CartContext';
 import logo from '../assets/SIIP_MASTER_FULL_WHITE.png';
 
 const menuItems = [
-  { label: 'HOME', path: '/', id: 'home' },
-  { label: 'STORE', path: '/#store', id: 'store' },
+  { label: 'HOME', path: '/', id: null },
+  { label: 'STORE', path: '/store', id: null },
   { label: 'ABOUT', path: '/About-us', id: null },
 ];
 
@@ -23,13 +23,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
 
   const handleNavClick = (e: React.MouseEvent, item: typeof menuItems[0]) => {
-    if (item.id && isHome) {
-      e.preventDefault();
-      const el = document.getElementById(item.id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    // Standard navigation, no preventDefault needed except for specific manual handling if any
   };
 
   useEffect(() => {

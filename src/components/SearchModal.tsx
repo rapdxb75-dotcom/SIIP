@@ -57,9 +57,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             <ul className="space-y-6">
               {[
                 { label: 'Home', path: '/' },
-                { label: 'Store', path: '/' },
-                { label: 'Collections', path: '/' },
-                { label: 'Fire', path: '/' }
+                { label: 'Store', path: '/store' },
+                { label: 'About', path: '/About-us' }
               ].map((item) => (
                 <li key={item.label}>
                   <Link 
