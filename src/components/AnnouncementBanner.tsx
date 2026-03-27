@@ -9,17 +9,26 @@ const AnnouncementBanner = () => {
   });
 
   useEffect(() => {
-    // Initialize target date (1 week from now)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
+    // Check if target date already exists in localStorage
+    const storedDate = localStorage.getItem('announcementTargetDate_v2');
+    let targetDate: Date;
 
-    const interval = setInterval(() => {
+    if (storedDate) {
+      targetDate = new Date(storedDate);
+    } else {
+      // Initialize target date (1 week from now)
+      targetDate = new Date();
+      targetDate.setDate(targetDate.getDate() + 7);
+      localStorage.setItem('announcementTargetDate_v2', targetDate.toISOString());
+    }
+
+    const updateTimer = () => {
       const now = new Date();
       const diff = targetDate.getTime() - now.getTime();
 
       if (diff <= 0) {
-        clearInterval(interval);
-        return;
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return false;
       }
 
       setTimeLeft({
@@ -28,6 +37,15 @@ const AnnouncementBanner = () => {
         minutes: Math.floor((diff / (1000 * 60)) % 60),
         seconds: Math.floor((diff / 1000) % 60)
       });
+      return true;
+    };
+
+    // Initial update
+    updateTimer();
+
+    const interval = setInterval(() => {
+      const active = updateTimer();
+      if (!active) clearInterval(interval);
     }, 1000);
 
     return () => clearInterval(interval);
