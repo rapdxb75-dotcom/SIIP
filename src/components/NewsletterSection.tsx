@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 
 const NewsletterSection = () => {
   return (
@@ -36,7 +37,7 @@ const NewsletterSection = () => {
 
           {/* Optional Footer Text */}
           <p className="text-white/20 text-[10px] uppercase font-bold tracking-widest text-display">
-            BY JOINING, YOU AGREE TO OUR TERMS & PRIVACY POLICY.
+            BY JOINING, YOU AGREE TO OUR TERMS & <Link to="/privacy-policy" className="underline hover:text-white transition-colors">PRIVACY POLICY</Link>.
           </p>
 
         </div>

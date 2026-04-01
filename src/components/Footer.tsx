@@ -1,6 +1,7 @@
 import { Instagram, Twitter, Youtube, MessageSquare, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -40,8 +41,9 @@ const Footer = () => {
             <h4 className="text-display text-[10px] md:text-xs font-black tracking-[0.4em] text-white/40 uppercase">INFORMATION</h4>
             <ul className="space-y-2 text-[11px] md:text-xs font-bold text-white/60 tracking-widest uppercase text-display">
               <li><a href="#" className="hover:text-white transition-all">Imprint</a></li>
-              <li><a href="#" className="hover:text-white transition-all">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-all">General Terms</a></li>
+              <li><Link to="/privacy-policy" className="hover:text-white transition-all text-display">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-white transition-all text-display">General Terms</Link></li>
+              <li><Link to="/size-guide" className="hover:text-white transition-all text-display">Size Guide</Link></li>
             </ul>
           </div>
 
@@ -49,8 +51,8 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-display text-[10px] md:text-xs font-black tracking-[0.4em] text-white/40 uppercase">CONTACT</h4>
             <ul className="space-y-2 text-[11px] md:text-xs font-bold text-white/60 tracking-widest uppercase text-display">
-              <li><a href="#" className="hover:text-white transition-all">Shipping Conditions</a></li>
-              <li><a href="#" className="hover:text-white transition-all">Right of Withdrawal</a></li>
+              <li><Link to="/shipping-returns" className="hover:text-white transition-all text-display">Shipping Conditions</Link></li>
+              <li><Link to="/shipping-returns" className="hover:text-white transition-all text-display">Right of Withdrawal</Link></li>
             </ul>
           </div>
 
