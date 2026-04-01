@@ -2,7 +2,7 @@ import { Star, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const testimonials = [
-  ...Array(10).fill(null).map((_, i) => ({
+  ...Array(9).fill(null).map((_, i) => ({
     id: i + 1,
     name: ['Isabella Rodriguez', 'Gabrielle Williams', 'Samantha Johnson', 'Natalie Martinez', 'Victoria Thompson', 'John Peter', 'Alex Rivera', 'Marcus Chen', 'Elena Petrova', 'David Smith'][i],
     role: 'Product Lead @ SIIP',
@@ -28,7 +28,7 @@ const TestimonialsSection = () => {
       {/* Header Section */}
       <div className="container mx-auto px-6 max-w-7xl relative z-20 mb-16 md:mb-24">
         <div className="flex flex-col items-center text-center space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          
+
           <div className="space-y-10">
             <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-tight text-display max-w-4xl">
               Join the movement.<br />
@@ -36,10 +36,10 @@ const TestimonialsSection = () => {
             </h2>
 
             <Button
-                asChild
-                className="bg-white text-black hover:bg-white/90 border-2 border-white transition-all duration-300 px-10 py-5 text-sm md:text-base font-bold uppercase tracking-[0.2em] rounded-none text-display"
-             >
-                <a href="https://instagram.com/siiplife" target="_blank" rel="noopener noreferrer">Follow us</a>
+              asChild
+              className="bg-white text-black hover:bg-white/90 border-2 border-white transition-all duration-300 px-10 py-5 text-sm md:text-base font-bold uppercase tracking-[0.2em] rounded-none text-display"
+            >
+              <a href="https://instagram.com/siiplife" target="_blank" rel="noopener noreferrer">Follow us</a>
             </Button>
           </div>
         </div>
@@ -47,7 +47,7 @@ const TestimonialsSection = () => {
 
       {/* Testimonials Display */}
       <div className="w-full relative px-6 md:px-10">
-        
+
         {/* Responsive Grid for Mobile/Tablet/Small Laptop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:hidden gap-6 md:gap-8 max-w-7xl mx-auto">
           {testimonials.map((t, index) => (
@@ -72,7 +72,7 @@ const TestimonialsSection = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Background Gradients for fade effect on edges - only on large screens where overflow happens */}
       <div className="hidden xl:block absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-black to-transparent z-10" />
       <div className="hidden xl:block absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-black to-transparent z-10" />
@@ -81,7 +81,7 @@ const TestimonialsSection = () => {
 };
 
 const TestimonialCard = ({ t, index }: { t: any; index: number }) => (
-  <div 
+  <div
     className={`flex-shrink-0 w-full xl:w-[320px] h-auto min-h-[220px] md:min-h-[280px] bg-[#0D0D0D] border border-white/5 p-6 md:p-8 rounded-[2px] flex flex-col justify-between transition-all duration-500 hover:border-white/20 group relative animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-${(index % 5) * 100}`}
   >
     <div className="space-y-4">
@@ -96,8 +96,8 @@ const TestimonialCard = ({ t, index }: { t: any; index: number }) => (
         <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
       </div>
       <div className="overflow-hidden">
-         <h4 className="text-white text-[10px] md:text-xs font-black uppercase tracking-wider text-display truncate">{t.name}</h4>
-         <p className="text-white/40 text-[8px] md:text-[10px] uppercase tracking-tight font-bold text-display truncate mt-0.5">{t.role}</p>
+        <h4 className="text-white text-[10px] md:text-xs font-black uppercase tracking-wider text-display truncate">{t.name}</h4>
+        <p className="text-white/40 text-[8px] md:text-[10px] uppercase tracking-tight font-bold text-display truncate mt-0.5">{t.role}</p>
       </div>
     </div>
   </div>

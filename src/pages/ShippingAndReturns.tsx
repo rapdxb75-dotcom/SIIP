@@ -6,7 +6,7 @@ const ShippingAndReturns = () => {
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
       <Navbar />
       
-      <main className="pt-24 pb-20 md:pt-32 md:pb-32 px-6 md:px-12">
+      <main className="pt-32 pb-20 md:pt-32 md:pb-32 px-6 md:px-12">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-20 space-y-4">
             <h1 className="text-display text-4xl md:text-6xl font-black uppercase tracking-tighter leading-tight animate-in fade-in slide-in-from-bottom-8 duration-700">

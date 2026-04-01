@@ -25,7 +25,7 @@ const VideoHero = () => {
           muted
           loop
           playsInline
-          className="h-full w-full object-cover opacity-80"
+          className="h-full w-full object-cover object-center md:object-top opacity-80"
         >
           <source 
             src={isMobile ? mobileVideo : desktopVideo} 
