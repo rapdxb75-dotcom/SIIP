@@ -154,23 +154,23 @@ const ProductGrid = () => {
                         </div>
                      </div>
 
-                     {/* Add to Cart CTA */}
-                     <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (selectedSizes[product.id]) {
-                             addToCart({ ...product, size: selectedSizes[product.id] });
-                          }
-                        }}
-                        disabled={!selectedSizes[product.id]}
-                        className={`w-full py-4 text-[10px] md:text-xs font-black uppercase tracking-[0.3em] transition-all duration-500 translate-y-8 group-hover/card:translate-y-0 transition-transform duration-500 delay-150 ${
-                          selectedSizes[product.id] 
-                          ? 'bg-blue-600 text-white hover:bg-blue-500 cursor-pointer' 
-                          : 'bg-white/10 text-white/30 cursor-not-allowed'
-                        }`}
-                      >
-                        {selectedSizes[product.id] ? `ADD ${selectedSizes[product.id]} TO CART` : 'SELECT SIZE'}
-                     </button>
+                      {/* Add to Cart CTA */}
+                      <button 
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           if (selectedSizes[product.id]) {
+                              addToCart({ ...product, size: selectedSizes[product.id] });
+                           }
+                         }}
+                         disabled={!selectedSizes[product.id]}
+                         className={`w-full py-4 text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-500 translate-y-8 group-hover/card:translate-y-0 transition-transform duration-500 delay-150 shadow-2xl ${
+                           selectedSizes[product.id] 
+                           ? 'bg-white text-black hover:bg-zinc-200 cursor-pointer' 
+                           : 'bg-white/10 text-white/30 cursor-not-allowed'
+                         }`}
+                       >
+                         {selectedSizes[product.id] ? `ADD ${selectedSizes[product.id]} TO CART` : 'SELECT SIZE'}
+                      </button>
 
                   </div>
                 </div>

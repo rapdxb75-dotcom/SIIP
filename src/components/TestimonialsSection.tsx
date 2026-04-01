@@ -45,37 +45,44 @@ const TestimonialsSection = () => {
         </div>
       </div>
 
-      {/* Widened Scrolling/Static Layout for Overflow Effect */}
-      <div className="w-full relative px-4">
-        <div className="flex flex-col gap-8 md:gap-12">
-          
+      {/* Testimonials Display */}
+      <div className="w-full relative px-6 md:px-10">
+        
+        {/* Responsive Grid for Mobile/Tablet/Small Laptop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:hidden gap-6 md:gap-8 max-w-7xl mx-auto">
+          {testimonials.map((t, index) => (
+            <TestimonialCard key={t.id} t={t} index={index} />
+          ))}
+        </div>
+
+        {/* Fancy Overflow Rows for Large Desktop */}
+        <div className="hidden xl:flex flex-col gap-12 overflow-hidden">
           {/* Row 1 */}
-          <div className="flex justify-center gap-4 md:gap-10 w-[180vw] md:w-[140vw] -ml-[40vw] md:-ml-[20vw] items-start">
+          <div className="flex justify-center gap-10 min-w-max items-start">
             {testimonials.slice(0, 5).map((t, index) => (
               <TestimonialCard key={t.id} t={t} index={index} />
             ))}
           </div>
 
           {/* Row 2 */}
-          <div className="flex justify-center gap-4 md:gap-10 w-[180vw] md:w-[140vw] -ml-[40vw] md:-ml-[20vw] items-end translate-x-12">
+          <div className="flex justify-center gap-10 min-w-max items-end translate-x-12">
             {testimonials.slice(5, 10).map((t, index) => (
               <TestimonialCard key={t.id} t={t} index={index + 5} />
             ))}
           </div>
-          
         </div>
       </div>
       
-      {/* Background Gradients for fade effect on edges */}
-      <div className="absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-black to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-black to-transparent z-10" />
+      {/* Background Gradients for fade effect on edges - only on large screens where overflow happens */}
+      <div className="hidden xl:block absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-black to-transparent z-10" />
+      <div className="hidden xl:block absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-black to-transparent z-10" />
     </section>
   );
 };
 
 const TestimonialCard = ({ t, index }: { t: any; index: number }) => (
   <div 
-    className={`flex-shrink-0 w-[230px] md:w-[320px] h-[220px] md:h-[280px] bg-[#0D0D0D] border border-white/5 p-6 md:p-8 rounded-[2px] flex flex-col justify-between transition-all duration-500 hover:border-white/20 group relative animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-${(index % 5) * 100}`}
+    className={`flex-shrink-0 w-full xl:w-[320px] h-auto min-h-[220px] md:min-h-[280px] bg-[#0D0D0D] border border-white/5 p-6 md:p-8 rounded-[2px] flex flex-col justify-between transition-all duration-500 hover:border-white/20 group relative animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-${(index % 5) * 100}`}
   >
     <div className="space-y-4">
       <Quote size={20} className="text-blue-500 opacity-80" />
