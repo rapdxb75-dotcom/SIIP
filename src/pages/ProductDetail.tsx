@@ -66,12 +66,12 @@ const ProductDetail = () => {
       
       <main className="container mx-auto px-4 md:px-12 pt-32 md:pt-48 pb-12 md:pb-20">
         {/* Breadcrumb Navigation */}
-        <nav className="flex items-center flex-wrap gap-2 text-[9px] md:text-xs font-black uppercase tracking-[0.2em] mb-12 md:mb-16 text-muted-foreground">
-          <Link to="/" className="hover:text-black">Home</Link>
-          <ChevronRight size={10} className="opacity-20" />
-          <Link to="/store" className="hover:text-black">Store</Link>
-          <ChevronRight size={10} className="opacity-20" />
-          <span className="text-black truncate max-w-[150px] md:max-w-none">{product.name}</span>
+        <nav className="flex items-center flex-wrap gap-3 text-[9px] md:text-xs font-black uppercase tracking-[0.2em] mb-12 md:mb-16 text-muted-foreground">
+          <Link to="/" className="hover:text-black transition-colors">Home</Link>
+          <ChevronRight size={14} className="opacity-40 text-black mx-1" strokeWidth={3} />
+          <Link to="/store" className="hover:text-black transition-colors">Store</Link>
+          <ChevronRight size={14} className="opacity-40 text-black mx-1" strokeWidth={3} />
+          <span className="text-black truncate max-w-[150px] md:max-w-none italic">{product.name}</span>
         </nav>
 
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-16">
