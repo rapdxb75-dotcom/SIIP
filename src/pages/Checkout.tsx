@@ -66,7 +66,7 @@ const Checkout = () => {
     <div className="min-h-screen bg-[#FAFAFA]">
       <Navbar />
       
-      <main className="container mx-auto px-4 md:px-12 pt-24 md:pt-40 pb-12 md:pb-32 max-w-[1400px]">
+      <main className="container mx-auto px-4 md:px-12 pt-32 md:pt-40 pb-12 md:pb-32 max-w-[1400px]">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-16">
           
           {/* Left Column: Form Flow */}

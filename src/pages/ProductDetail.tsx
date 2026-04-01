@@ -30,6 +30,7 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [accordionValue, setAccordionValue] = useState<string | undefined>(undefined);
 
   const product = useMemo(() => {
     return products.find(p => p.id === parseInt(id || ''));
@@ -148,13 +149,19 @@ const ProductDetail = () => {
             <div className="space-y-6 mb-12">
               <div className="flex items-center justify-between">
                 <p className="text-display text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em]">Available Sizes</p>
-                <Link 
-                  to="/size-guide"
+                <button 
+                  onClick={() => {
+                    setAccordionValue('sizing');
+                    const element = document.getElementById('product-specs');
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                  }}
                   className="text-[10px] md:text-[11px] font-black uppercase underline underline-offset-4 tracking-widest opacity-60 hover:opacity-100 flex items-center gap-2 group transition-all"
                 >
                   <Ruler size={14} className="group-hover:scale-125 transition-transform" />
                   Size guide
-                </Link>
+                </button>
               </div>
               <div className="flex flex-wrap gap-3">
                 {sizes.map((size) => (
@@ -208,7 +215,14 @@ const ProductDetail = () => {
             </div>
 
             {/* Accordion List for Detail Info */}
-            <Accordion type="single" collapsible className="w-full border-t border-black/10">
+            <Accordion 
+                id="product-specs"
+                type="single" 
+                collapsible 
+                value={accordionValue}
+                onValueChange={setAccordionValue}
+                className="w-full border-t border-black/10"
+            >
               <AccordionItem value="story" className="border-b-black/10">
                 <AccordionTrigger className="text-display underline-none text-[11px] font-black uppercase tracking-[0.3em] py-6 hover:no-underline group">
                    <div className="flex items-center gap-3">
@@ -267,6 +281,58 @@ const ProductDetail = () => {
                 </AccordionTrigger>
                 <AccordionContent className="text-body text-[13px] md:text-[15px] italic text-muted-foreground pb-8">
                   {product.artworkCredit || 'Curated by SIIP Studio Division. Part of the Restricted Collective.'}
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="sizing" className="border-b-black/10">
+                <AccordionTrigger className="text-display underline-none text-[11px] font-black uppercase tracking-[0.3em] py-6 hover:no-underline group">
+                   <div className="flex items-center gap-3">
+                      <Ruler size={16} className="text-zinc-400 group-hover:scale-110 transition-transform" />
+                      Size details
+                   </div>
+                </AccordionTrigger>
+                <AccordionContent className="pb-8">
+                  <div className="overflow-x-auto no-scrollbar">
+                    <table className="w-full text-left text-[11px] uppercase font-black tracking-widest min-w-[400px]">
+                        <thead>
+                            <tr className="border-b border-black/5 opacity-40">
+                                <th className="py-4 pr-10">Size</th>
+                                <th className="py-4 px-10">Chest (CM)</th>
+                                <th className="py-4 px-10">Length (CM)</th>
+                                <th className="py-4 pl-10 text-right">Sleeve (CM)</th>
+                            </tr>
+                        </thead>
+                        <tbody className="text-muted-foreground">
+                            <tr className="border-b border-black/5">
+                                <td className="py-4 pr-10 text-black">Small</td>
+                                <td className="py-4 px-10">54</td>
+                                <td className="py-4 px-10">68</td>
+                                <td className="py-4 pl-10 text-right">22</td>
+                            </tr>
+                            <tr className="border-b border-black/5">
+                                <td className="py-4 pr-10 text-black">Medium</td>
+                                <td className="py-4 px-10">57</td>
+                                <td className="py-4 px-10">70</td>
+                                <td className="py-4 pl-10 text-right">23</td>
+                            </tr>
+                            <tr className="border-b border-black/5">
+                                <td className="py-4 pr-10 text-black">Large</td>
+                                <td className="py-4 px-10">60</td>
+                                <td className="py-4 px-10">72</td>
+                                <td className="py-4 pl-10 text-right">24</td>
+                            </tr>
+                            <tr className="border-none">
+                                <td className="py-4 pr-10 text-black">X-Large</td>
+                                <td className="py-4 px-10">63</td>
+                                <td className="py-4 px-10">74</td>
+                                <td className="py-4 pl-10 text-right">25</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                  <p className="mt-8 text-[11px] text-muted-foreground/60 italic font-medium leading-relaxed max-w-sm">
+                    * All measurements are taken flat. Our archive garments feature an oversized, heavyweight silhouette. We recommend choosing your standard size for the intended fit.
+                  </p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

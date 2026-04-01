@@ -80,18 +80,18 @@ const ProductGrid = () => {
             <button
               onClick={() => emblaApi?.scrollPrev()}
               disabled={!canPrev}
-              className="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center disabled:opacity-20 hover:bg-white hover:text-black hover:border-white transition-all duration-300 backdrop-blur-sm"
+              className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white disabled:opacity-10 hover:bg-white hover:text-black hover:border-white transition-all duration-300 backdrop-blur-sm"
               aria-label="Previous products"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20} strokeWidth={2.5} />
             </button>
             <button
               onClick={() => emblaApi?.scrollNext()}
               disabled={!canNext}
-              className="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center disabled:opacity-20 hover:bg-white hover:text-black hover:border-white transition-all duration-300 backdrop-blur-sm"
+              className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white disabled:opacity-10 hover:bg-white hover:text-black hover:border-white transition-all duration-300 backdrop-blur-sm"
               aria-label="Next products"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={20} strokeWidth={2.5} />
             </button>
           </div>
         </div>
@@ -102,7 +102,7 @@ const ProductGrid = () => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="flex-[0_0_calc(85%-1px)] sm:flex-[0_0_calc(45%-1px)] lg:flex-[0_0_calc(25%-1px)] group"
+                className="flex-[0_0_calc(85%-12px)] sm:flex-[0_0_calc(45%-16px)] lg:flex-[0_0_calc(25%-24px)] group"
               >
                 <div className="relative aspect-[4/5] bg-white/[0.03] border border-white/5 overflow-hidden group/card shadow-2xl rounded-[2px]">
                   {/* Main Product Image with subtle zoom */}

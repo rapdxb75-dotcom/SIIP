@@ -18,7 +18,7 @@ const CartSidebar = () => {
   return (
     <>
       {/* Overlay */}
-      <div 
+      <div
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] transition-opacity duration-500 ${isCartOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsCartOpen(false)}
       />
@@ -42,16 +42,16 @@ const CartSidebar = () => {
             <div className="flex items-center gap-3 mb-3">
               <Truck size={16} className={progress === 100 ? 'text-green-600' : 'text-black'} />
               <p className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em]">
-                {progress === 100 
-                  ? "You've unlocked free international shipping!" 
+                {progress === 100
+                  ? "You've unlocked free international shipping!"
                   : `Add $${remaining.toFixed(2)} more for free shipping`}
               </p>
             </div>
             <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
-               <div 
-                className="h-full bg-black transition-all duration-1000 ease-out" 
-                style={{ width: `${progress}%` }} 
-               />
+              <div
+                className="h-full bg-black transition-all duration-1000 ease-out"
+                style={{ width: `${progress}%` }}
+              />
             </div>
           </div>
 
@@ -78,20 +78,20 @@ const CartSidebar = () => {
                       </div>
                       <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-bold">Size: {item.size || 'M'}</p>
                     </div>
-                    
+
                     <div className="flex items-center justify-between mt-4">
-                       <div className="flex items-center border-2 border-black/5 bg-zinc-50">
-                         <button onClick={() => updateQuantity(item.id, -1)} className="px-3 py-1.5 hover:bg-black/5 transition-colors">
-                           <Minus size={12} />
-                         </button>
-                         <span className="w-8 text-center text-[10px] font-black">{item.quantity}</span>
-                         <button onClick={() => updateQuantity(item.id, 1)} className="px-3 py-1.5 hover:bg-black/5 transition-colors">
-                           <Plus size={12} />
-                         </button>
-                       </div>
-                       <button onClick={() => removeFromCart(item.id)} className="text-black/20 hover:text-red-500 transition-colors p-2">
-                         <Trash2 size={16} />
-                       </button>
+                      <div className="flex items-center border-2 border-black/5 bg-zinc-50">
+                        <button onClick={() => updateQuantity(item.id, -1)} className="px-3 py-1.5 hover:bg-black/5 transition-colors">
+                          <Minus size={12} />
+                        </button>
+                        <span className="w-8 text-center text-[10px] font-black">{item.quantity}</span>
+                        <button onClick={() => updateQuantity(item.id, 1)} className="px-3 py-1.5 hover:bg-black/5 transition-colors">
+                          <Plus size={12} />
+                        </button>
+                      </div>
+                      <button onClick={() => removeFromCart(item.id)} className="text-black/20 hover:text-red-500 transition-colors p-2">
+                        <Trash2 size={16} />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -105,31 +105,31 @@ const CartSidebar = () => {
               <div>
                 <span className="text-display text-[10px] md:text-[11px] uppercase font-black opacity-40 tracking-[0.2em]">Estimated Total</span>
                 <div className="flex items-center gap-2 mt-2">
-                    <ShieldCheck size={14} className="text-black/40" />
-                    <p className="text-[9px] text-black/40 uppercase font-bold tracking-widest leading-none">Security Guaranteed</p>
+                  <ShieldCheck size={14} className="text-black/40" />
+                  <p className="text-[9px] text-black/40 uppercase font-bold tracking-widest leading-none">Security Guaranteed</p>
                 </div>
               </div>
               <span className="text-display text-3xl md:text-4xl font-black tracking-tighter leading-none italic">${totalPrice.toFixed(2)}</span>
             </div>
-            
+
             <div className="flex flex-col gap-4">
-                <button 
-                    onClick={handleCheckout}
-                    className="group w-full bg-black text-white text-display py-6 text-[11px] md:text-[12px] font-black uppercase tracking-[0.5em] hover:bg-zinc-900 transition-all active:scale-[0.98] shadow-2xl flex items-center justify-center gap-3"
-                >
+              <button
+                onClick={handleCheckout}
+                className="group w-full bg-black text-white text-display py-6 text-[11px] md:text-[12px] font-black uppercase tracking-[0.5em] hover:bg-zinc-900 transition-all active:scale-[0.98] shadow-2xl flex items-center justify-center gap-3"
+              >
                 Checkout <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </button>
-                
-                <button 
-                    onClick={() => setIsCartOpen(false)}
-                    className="w-full bg-white text-black border border-black/10 py-5 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all"
-                >
+              </button>
+
+              <button
+                onClick={() => setIsCartOpen(false)}
+                className="w-full text-center text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground hover:text-black transition-all underline underline-offset-8 decoration-black/10 hover:decoration-black"
+              >
                 Continue shopping
-                </button>
+              </button>
             </div>
-            
+
             <p className="text-center text-[9px] text-muted-foreground font-medium uppercase tracking-widest mt-8 flex items-center justify-center gap-2">
-                All rights reserved by SIIP Archive • London 2026
+              All rights reserved by SIIP Archive • London 2026
             </p>
           </div>
         </div>

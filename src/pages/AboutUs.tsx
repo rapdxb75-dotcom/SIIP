@@ -17,7 +17,7 @@ const AboutUs = () => {
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
       <Navbar />
       
-      <main className="pt-24 pb-20 md:pt-32 md:pb-32 px-4 md:px-8 overflow-hidden">
+      <main className="pt-32 pb-20 md:pt-32 md:pb-32 px-4 md:px-8 overflow-hidden">
         <div className="container mx-auto max-w-5xl">
           
           {/* Hero Section - High Impact Messaging */}
