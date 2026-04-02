@@ -27,12 +27,12 @@ const FoundersSection = () => {
                 </div>
                 
                 <div className="space-y-8">
-                   <div className="space-y-4">
-                      <p className="text-white/80 text-sm md:text-lg font-normal tracking-wide text-body">
-                         We believe design is a voice, and print is power.
+                   <div className="space-y-6">
+                      <p className="text-white/80 text-sm md:text-lg font-normal tracking-wide text-body leading-relaxed max-w-md">
+                         SIIP wasn't built in a boardroom. It was born between two friends, Gabby and Sargina, sharing a vision for art that moves with the people.
                       </p>
-                      <p className="text-white/40 text-[10px] md:text-xs font-normal tracking-[0.2em] uppercase text-body leading-relaxed">
-                         We say it in print — <span className="text-white/50">bold, unapologetic, and impossible to ignore.</span>
+                      <p className="text-white/60 text-sm md:text-lg font-normal tracking-wide text-body leading-relaxed italic max-w-md">
+                         We believe what you wear should reflect who you are and what you stand for. Our medium is the print; our heart is the community.
                       </p>
                    </div>
 

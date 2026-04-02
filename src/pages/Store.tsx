@@ -252,6 +252,9 @@ const Store = () => {
                         <h1 className="text-display text-3xl md:text-7xl font-black uppercase tracking-tighter leading-none italic">
                             THE STORE<span className="text-blue-600">.</span>
                         </h1>
+                        <p className="max-w-md text-muted-foreground text-[13px] md:text-base leading-relaxed animate-in fade-in duration-1000 delay-300 font-medium">
+                            Welcome to DROP 1: #NWPR. An archival exploration of art as resistance, featuring original SIIP motifs and heavyweight cotton construction. Carry the story, wear the conviction.
+                        </p>
                     </div>
 
                     <div className="flex flex-row overflow-x-auto pb-4 md:pb-0 gap-2 md:gap-3 no-scrollbar scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">

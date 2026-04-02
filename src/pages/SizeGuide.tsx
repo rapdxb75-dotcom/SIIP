@@ -30,7 +30,7 @@ const SizeGuide = () => {
               <div className="space-y-4">
                 <h2 className="text-display text-xl md:text-2xl font-black text-foreground uppercase tracking-tight">SIIP Signature Tees</h2>
                 <p className="text-body text-base text-muted-foreground max-w-2xl">
-                  Our tees feature a modern boxy fit, designed with structured, heavyweight cotton. All measurements are in <span className="text-foreground font-bold">centimeters (CM)</span>, measured with the garment lying flat.
+                  Find your perfect fit with the SIIP signature silhouette. Our tees are designed with a purposeful, heavyweight oversized fit and dropped shoulders. Use the chart below to compare measurements against your favorite boxy tee. When in doubt, size up for the collective. 
                 </p>
               </div>
 

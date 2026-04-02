@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import playGif from '@/assets/Play-Win.gif';
 
 const PlayWinSection = () => {
@@ -18,16 +19,15 @@ const PlayWinSection = () => {
         <div className="relative z-10 w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center items-center md:items-start px-8 md:px-20 py-12 md:py-0 order-2 md:order-1 text-center md:text-left bg-[#090A0F]">
            <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-left-12 duration-1000 ease-out max-w-xl">
              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-[1.1] text-display">
-                Play SIIP.<br />
-                Compete monthly.<br />
-                Win free merch.
+                Enter the arcade. Beat the high score to unlock exclusive archival access and win #NWPR prizes. Are you game?
              </h2>
-             <Button
-                onClick={scrollToGame}
-                className="w-full sm:w-auto bg-white text-black hover:bg-white/90 transition-all duration-300 px-10 py-5 text-sm md:text-base font-bold uppercase tracking-[0.2em] rounded-none text-display"
-             >
-              Play Now
-            </Button>
+             <Link to="/play">
+               <Button
+                  className="w-full sm:w-auto bg-white text-black hover:bg-white/90 transition-all duration-300 px-10 py-5 text-sm md:text-base font-bold uppercase tracking-[0.2em] rounded-none text-display"
+               >
+                Play Now
+              </Button>
+             </Link>
            </div>
         </div>
 

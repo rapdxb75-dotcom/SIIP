@@ -55,13 +55,13 @@ const AboutUs = () => {
               
               <div className="space-y-6 text-body text-base md:text-lg leading-relaxed text-muted-foreground">
                 <p>
-                  SIIP wasn't built in a boardroom. It was born in the quiet moments between two friends, Gabby and Sargina, sharing a vision for something more than just apparel. 
+                  SIIP wasn't built in a boardroom or a studio with big budgets. It was born in the quiet, honest moments between two friends, Gabby and Sargina, sharing a vision for something that felt more like a conversation than a transaction. We grew up surrounded by art and activism, seeing the way a single image or a well-placed word could shift a room’s energy. We wanted to bring that same soul to the clothes we lived in every day.
                 </p>
                 <p>
-                  We wanted to create a space where art wasn't just seen, but lived. A space where creativity meets conviction, and every print tells a story that words sometimes can't capture.
+                  What started as long nights brainstorming over coffee turned into a mission to bridge the gap between heritage and modern expression. We saw a need for streetwear that didn't just follow trends, but carried a story—one that felt as real as the people wearing it. For us, SIIP is about more than just prints on fabric; it’s about the intersection of creative soul and cultural conviction.
                 </p>
-                <p className="italic text-foreground">
-                  "We believe that what you wear should be a reflection of who you are and what you stand for. SIIP is our medium to make sure that voice is heard—boldly and beautifully."
+                <p>
+                  Every drop we release is an archive of our journey, built on the belief that what you wear should be a reflection of who you are and what you stand for. We believe in the power of the collective and the beauty of resistance through creativity. From the first sketch to the final heavyweight cotton piece, SIIP remains a tribute to friendship, authenticity, and the bold pursuit of saying it in print.
                 </p>
               </div>
             </div>
@@ -102,9 +102,12 @@ const AboutUs = () => {
 
           {/* Mission / Values Section */}
           <div className="mb-32">
-            <div className="text-center mb-16 space-y-4">
+            <div className="text-center mb-16 space-y-6 max-w-2xl mx-auto">
               <h2 className="text-display text-2xl md:text-3xl font-black tracking-tight uppercase">MISSION & VALUES</h2>
               <div className="w-24 h-1 bg-primary mx-auto" />
+              <p className="text-body text-base md:text-lg leading-relaxed text-muted-foreground italic">
+                "Our mission is to turn creativity into resistance and clothing into a conversation. We believe in the power of original art to challenge the status quo, prioritizing community over commerce and dignity over trends. At SIIP, design is our voice; print is our power."
+              </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
@@ -147,7 +150,7 @@ const AboutUs = () => {
                 <div className="space-y-12">
                    <div className="space-y-4">
                       <h2 className="text-display text-3xl font-black tracking-tight uppercase">EVENTS</h2>
-                      <p className="text-body text-sm text-muted-foreground">Find us at pop-ups, markets, and gatherings globally.</p>
+                      <p className="text-body text-sm text-muted-foreground">Catch SIIP in the real world at our upcoming pop-ups and markets. We’re excited to kick off at Tech for Palestine Barcelona on 10 April 2026!</p>
                    </div>
                       
                    <div className="space-y-8">

@@ -10,6 +10,7 @@ import logo from '../assets/SIIP_MASTER_FULL_WHITE.png';
 const menuItems = [
   { label: 'HOME', path: '/', id: null },
   { label: 'STORE', path: '/store', id: null },
+  { label: 'PLAY', path: '/play', id: null },
   { label: 'ABOUT', path: '/About-us', id: null },
   { label: 'CONTACT', path: '/contact', id: null },
 ];

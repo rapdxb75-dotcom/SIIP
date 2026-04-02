@@ -47,8 +47,8 @@ const Contact = () => {
                 </h1>
                 <p className="text-body text-base md:text-lg text-muted-foreground max-w-sm leading-relaxed font-medium">
                   {type === 'wholesale' 
-                    ? "Interested in stocking SIIP? Let us talk about bringing our restricted collection to your boutique." 
-                    : "We would love to hear from you. Whether it's a sizing enquiry or you just want to talk shop—our team is standing by."}
+                    ? "Interested in bringing the SIIP archive to your space? We’re always looking for like-minded partners to stock our restricted collections. Let’s talk shop." 
+                    : "We’re here for the questions, the ideas, and the conversations. Reach out and let’s start something together."}
                 </p>
               </div>
 
@@ -221,25 +221,25 @@ const Contact = () => {
                    01. GLOBAL SHIPPING & ARCHIVE LOGISTICS
                 </AccordionTrigger>
                 <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
-                  We ship globally from our London archive. Standard international delivery typically takes 3-5 business days. Once your order is dispatched, you will receive an encrypted tracking link to monitor your archive's journey. Free shipping is automatically unlocked on all orders over $150.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="sizing" className="border-b-black/10">
-                <AccordionTrigger className="text-display text-left underline-none text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] py-8 md:py-10 hover:no-underline group focus:outline-none">
-                   02. SIZING & FITMENT PROTOCOLS
-                </AccordionTrigger>
-                <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
-                  Our garments are designed with a boxy, heavyweight oversized fit—inspired by 90s arcade culture. We recommend choosing your standard size for the intended silhouette. Check individual product pages for specific garment measurements. If between sizes, we suggest sizing up for the restricted collective aesthetic.
+                  We ship globally from our London archive. Standard international delivery typically takes 3-5 business days. Once dispatched, you’ll receive an encrypted tracking link to monitor your order's journey. Free shipping is automatically unlocked on all orders over $150.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="returns" className="border-b-black/10">
                 <AccordionTrigger className="text-display text-left underline-none text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] py-8 md:py-10 hover:no-underline group focus:outline-none">
-                   03. RETURNS & ARCHIVE REJECTS
+                   02. RETURNS & REFUNDS
                 </AccordionTrigger>
                 <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
-                  We accept returns within 14 days of receipt, provided the items are in their original restricted packaging with all tags intact. Due to the limited nature of our drops, we currently do not offer direct exchanges. Instead, return your original item for a full refund and place a new order for the desired fragment.
+                  We accept returns within 14 days of receipt, provided items are in their original restricted packaging with all tags intact. Due to the limited nature of our drops, we currently do not offer direct exchanges. Simply return your item for a full refund.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="sizing" className="border-b-black/10">
+                <AccordionTrigger className="text-display text-left underline-none text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] py-8 md:py-10 hover:no-underline group focus:outline-none">
+                   03. SIZING & FITMENT PROTOCOLS
+                </AccordionTrigger>
+                <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
+                  Our garments feature a signature heavyweight oversized fit. We recommend choosing your standard size for the intended boxy silhouette. Check individual product pages for specific garment measurements. If you prefer a more tailored look, consider sizing down from your usual fit.
                 </AccordionContent>
               </AccordionItem>
 
@@ -248,7 +248,25 @@ const Contact = () => {
                    04. SIIP ARCHIVE GAME RULES
                 </AccordionTrigger>
                 <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
-                  Our collections are released as 'Levels'. Once a level is completed, it enters the vault and may never be restocked. All members who submit a high-score order over $300 are automatically eligible for the 'Elite Member' status, unlocking priority access to restricted drops and early technical blueprints.
+                  The arcade is where community meets competition. Play the weekly challenge to climb the leaderboard. High scorers gain early access to restricted drops and exclusive archival pieces. Remember, once a level is finished, those pieces enter the vault forever.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="prizes" className="border-b-black/10">
+                <AccordionTrigger className="text-display text-left underline-none text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] py-8 md:py-10 hover:no-underline group focus:outline-none">
+                   05. CLAIMING YOUR PRIZES
+                </AccordionTrigger>
+                <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
+                  Won the high score? Congratulations. Prize claims are processed within 48 hours of the leaderboard closing. You will receive a unique digital voucher via email to redeem your exclusive merch. Ensure your contact details are accurate to avoid any delays in transmission.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="materials" className="border-b-black/10">
+                <AccordionTrigger className="text-display text-left underline-none text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] py-8 md:py-10 hover:no-underline group focus:outline-none">
+                   06. PREMIUM MATERIALS & ARCHIVAL QUALITY
+                </AccordionTrigger>
+                <AccordionContent className="text-body text-xs md:text-sm leading-relaxed text-muted-foreground pb-12 font-medium">
+                  Quality is our conviction. Our tees are crafted from 240 GSM organic cotton, while our totes use sturdy 12oz canvas. All prints use eco-friendly pigments designed to last as long as the garments themselves. Premium archival quality, built for the street.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

@@ -22,7 +22,10 @@ const ShippingAndReturns = () => {
               <div className="space-y-4">
                 <h2 className="text-display text-xl md:text-2xl font-black text-foreground uppercase tracking-tight">1. Shipping Information</h2>
                 <p>
-                  We aim to get your SIIP pieces to you as quickly and securely as possible. All orders are processed within 1-2 business days.
+                  At SIIP, we prioritize the secure and efficient delivery of our archival fragments. All orders are processed at our London HQ within 1-2 business days. We offer localized shipping across the UK and Spain, with delivery timelines of 2-4 days. For our European collective, standard transit takes 3-7 days, while international shipments typically arrive within 7-14 business days. 
+                </p>
+                <p>
+                  Costs are calculated at checkout based on your delivery zone, with free shipping automatically unlocked on orders exceeding $150. Once your package is dispatched, you will receive an encrypted tracking link via email to monitor its journey in real-time. Please note that international orders may be subject to local customs duties, which are the responsibility of the recipient. We are committed to ensuring your piece reaches you in pristine, premium condition, wherever you are in the world.
                 </p>
               </div>
 
@@ -56,7 +59,10 @@ const ShippingAndReturns = () => {
               <div className="space-y-4">
                 <h2 className="text-display text-xl md:text-2xl font-black text-foreground uppercase tracking-tight">2. Returns Policy</h2>
                 <p>
-                  We want you to love your SIIP purchase. If for any reason you are not satisfied, you have <span className="text-foreground font-bold">14 days</span> from the date of delivery to return your items for a full refund or exchange.
+                  We want your SIIP experience to be seamless. If your piece isn’t the perfect fit or doesn't meet your expectations, we offer a 14-day return window from the date of receipt. To qualify for a refund, items must be returned in their original, restricted packaging with all tags intact and no signs of wear or washing. 
+                </p>
+                <p>
+                  To start the process, simply email <span className="text-primary font-bold lowercase">support@siip.store</span> with your order number. While we don't offer direct exchanges due to the limited nature of our drops, we will process your refund to the original payment method within 10 business days of inspection. Your satisfaction is our conviction.
                 </p>
               </div>
 

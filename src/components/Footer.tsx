@@ -12,10 +12,10 @@ const Footer = () => {
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-10 mb-16 md:mb-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <div className="space-y-4">
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-tight text-display">
-              ART MEETS <br /> ACTIVISM<span className="text-blue-500">.</span>
+              Join the movement<span className="text-blue-500">.</span>
             </h2>
             <p className="text-white/50 text-sm md:text-lg font-bold tracking-tight text-display max-w-2xl mx-auto italic">
-              Subscribe for #NWPR collection updates, exclusive arcade results, and archival access.
+              Subscribe for #NWPR collection updates and exclusive archival access.
             </p>
           </div>
 

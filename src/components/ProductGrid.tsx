@@ -40,8 +40,8 @@ const ProductGrid = () => {
         {/* Premium Header - Custom Messaging */}
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
           <div className="max-w-2xl animate-in fade-in slide-in-from-left-8 duration-1000">
-            <p className="text-display text-[10px] md:text-xs tracking-[0.4em] text-white/40 mb-4 uppercase font-bold italic leading-relaxed">
-              No War por Favor. Art meets activism. <span className="text-white/60">#NWPR Limited drop.</span>
+            <p className="text-display text-[10px] md:text-sm tracking-[0.2em] text-white/60 mb-4 uppercase font-bold italic leading-relaxed">
+              DROP 1: #NWPR. <span className="text-white/40">A collection of archival fragments reimagining beauty as resistance. Hand-drawn marks and heavyweight cotton for those who carry a story.</span>
             </p>
             <h2 className="text-display text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
               THE SIIP <br /> ARCHIVE<span className="text-blue-500">.</span>
