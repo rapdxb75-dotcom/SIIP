@@ -27,6 +27,7 @@ const SpaceInvadersGame = () => {
   const animFrameRef = useRef<number>(0);
   const [displayState, setDisplayState] = useState<GameState>({ score: 0, lives: 2, level: 0, gameOver: false, started: false, paused: false, won: false });
   const [bestScore, setBestScore] = useState(0);
+  const [scoreSubmitted, setScoreSubmitted] = useState(false);
 
   useEffect(() => {
     const cookie = document.cookie.split('; ').find(row => row.startsWith('invadersBestScore='));
@@ -474,17 +475,22 @@ const SpaceInvadersGame = () => {
     return () => cancelAnimationFrame(animFrameRef.current);
   }, []);
 
+  const handleSubmitScore = () => {
+    if (scoreSubmitted) return;
+    
+    toast.success("SCORE SUBMITTED!", {
+      description: `Your score of ${displayState.score} has been queued for the global leaderboard.`,
+      duration: 3000,
+      className: "bg-black border-white/20 text-white font-display",
+    });
+    setScoreSubmitted(true);
+  };
+
   const handleStart = () => {
-    if (displayState.gameOver || displayState.won) {
-      toast.success("SCORE SUBMITTED!", {
-        description: `Your score of ${displayState.score} has been queued for the global leaderboard.`,
-        duration: 3000,
-        className: "bg-black border-white/20 text-white font-display",
-      });
-    }
     initAudio();
     cancelAnimationFrame(animFrameRef.current);
     startGame();
+    setScoreSubmitted(false);
   };
 
   const showOverlay = !displayState.started || displayState.gameOver || displayState.won;
@@ -554,13 +560,38 @@ const SpaceInvadersGame = () => {
               SCORE: {displayState.score} · LEVEL: {displayState.level}
             </p>
           )}
-          <button
-            onClick={handleStart}
-            className="pixel-border border-primary-foreground text-primary-foreground text-display px-6 py-2 text-sm hover:bg-primary-foreground hover:text-primary transition-colors"
-            style={{ boxShadow: '2px 2px 0px rgba(255,255,255,0.5)' }}
-          >
-            {displayState.gameOver || displayState.won ? 'Submit score' : 'Play now'}
-          </button>
+          {displayState.gameOver || displayState.won ? (
+            <div className="flex flex-col gap-3 w-full max-w-[240px]">
+              {!scoreSubmitted && (
+                <button
+                  onClick={handleSubmitScore}
+                  className="pixel-border border-primary-foreground text-primary-foreground text-display px-6 py-2.5 text-sm hover:bg-primary-foreground hover:text-primary transition-all duration-300 font-black uppercase tracking-widest"
+                  style={{ boxShadow: '4px 4px 0px rgba(255,255,255,0.3)' }}
+                >
+                  Submit score
+                </button>
+              )}
+              <button
+                onClick={handleStart}
+                className={`pixel-border border-primary-foreground text-display px-6 py-2.5 text-sm transition-all duration-300 font-black uppercase tracking-widest ${
+                  scoreSubmitted 
+                    ? 'bg-primary-foreground text-primary hover:bg-white/90' 
+                    : 'text-primary-foreground/60 hover:text-primary-foreground hover:bg-white/5'
+                }`}
+                style={!scoreSubmitted ? { borderStyle: 'dashed' } : { boxShadow: '4px 4px 0px rgba(255,255,255,0.3)' }}
+              >
+                Play again
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleStart}
+              className="pixel-border border-primary-foreground text-primary-foreground text-display px-6 py-3 text-sm hover:bg-primary-foreground hover:text-primary transition-all duration-300 font-black uppercase tracking-[0.2em]"
+              style={{ boxShadow: '4px 4px 0px rgba(255,255,255,0.3)' }}
+            >
+              Play now
+            </button>
+          )}
 
           {!isMobile ? (
             <div className="mt-6 flex flex-col items-center gap-2">
