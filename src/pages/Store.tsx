@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Ruler } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -234,7 +234,24 @@ const ProductCard = ({ product, addToCart }: { product: any, addToCart: any }) =
 
 const Store = () => {
     const { addToCart } = useCart();
-    const [activeCategory, setActiveCategory] = useState('ALL');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const categoryParam = searchParams.get('category') || 'ALL';
+    const [activeCategory, setActiveCategory] = useState(categoryParam);
+
+    // Sync state with URL params
+    React.useEffect(() => {
+        setActiveCategory(categoryParam);
+    }, [categoryParam]);
+
+    const handleCategoryChange = (category: string) => {
+        if (category === 'ALL') {
+            searchParams.delete('category');
+        } else {
+            searchParams.set('category', category);
+        }
+        setSearchParams(searchParams);
+        setActiveCategory(category);
+    };
 
     const filteredProducts = useMemo(() => {
         if (activeCategory === 'ALL') return products;
@@ -261,7 +278,7 @@ const Store = () => {
                         {categories.map((category) => (
                             <button
                                 key={category}
-                                onClick={() => setActiveCategory(category)}
+                                onClick={() => handleCategoryChange(category)}
                                 className={`text-display text-[9px] md:text-[10px] font-extrabold tracking-widest px-5 md:px-7 py-2.5 md:py-3 uppercase border transition-all duration-300 whitespace-nowrap ${activeCategory === category
                                         ? 'bg-foreground text-background border-foreground'
                                         : 'bg-transparent text-foreground/60 border-foreground/10 hover:border-foreground/40 hover:text-foreground'
