@@ -1,15 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight, ShoppingBag, Search } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import AnnouncementBanner from './AnnouncementBanner';
 import CartSidebar from './CartSidebar';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/SIIP_MASTER_FULL_WHITE.png';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 const menuItems = [
   { label: 'HOME', path: '/', id: null },
-  { label: 'STORE', path: '/store', id: null },
+  { 
+    label: 'STORE', 
+    path: '/store', 
+    id: null,
+    subItems: [
+      { label: 'ALL PRODUCTS', path: '/store' },
+      { label: 'TEES', path: '/store?category=TEES' },
+      { label: 'ACCESSORIES', path: '/store?category=ACCESSORIES' },
+    ]
+  },
   { label: 'PLAY', path: '/play', id: null },
   { label: 'ABOUT', path: '/About-us', id: null },
   { label: 'CONTACT', path: '/contact', id: null },
@@ -106,31 +116,83 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[150]">
-          <div className="absolute inset-0 bg-primary/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
-          <div className="absolute left-0 top-0 bottom-0 w-72 bg-primary flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between px-6 h-14 border-b border-primary-foreground/10">
+        <div className="fixed inset-0 z-[150] animate-in fade-in duration-300">
+          <div className="absolute inset-0 bg-primary/40 backdrop-blur-md" onClick={() => setMobileOpen(false)} />
+          <div className="absolute left-0 top-0 bottom-0 w-[85%] max-w-sm bg-primary flex flex-col shadow-2xl animate-in slide-in-from-left duration-500 ease-out">
+            <div className="flex items-center justify-between px-6 h-14 border-b border-white/5">
               <Link to="/" onClick={() => setMobileOpen(false)}>
                 <img src={logo} alt="SIIP" className="h-4 w-auto object-contain" />
               </Link>
-              <button onClick={() => setMobileOpen(false)} className="text-primary-foreground">
-                <X size={22} strokeWidth={1.5} />
+              <button 
+                onClick={() => setMobileOpen(false)} 
+                className="text-primary-foreground p-2 hover:bg-white/5 rounded-full transition-colors"
+                aria-label="Close menu"
+              >
+                <X size={20} strokeWidth={2} />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto py-4">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.path}
-                  onClick={(e) => {
-                    handleNavClick(e, item);
-                    setMobileOpen(false);
-                  }}
-                  className="block px-6 py-3 text-display text-sm text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
+            
+            <div className="flex-1 overflow-y-auto px-2 py-6 no-scrollbar">
+              <Accordion type="single" collapsible className="w-full space-y-1">
+                {menuItems.map((item) => (
+                  item.subItems ? (
+                    <AccordionItem key={item.label} value={item.label} className="border-none">
+                      <AccordionTrigger className="flex px-6 py-4 text-display text-sm font-black text-primary-foreground hover:bg-white/5 transition-all hover:no-underline rounded-lg group">
+                        <span className="tracking-[0.2em] uppercase">{item.label}</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="pt-1 pb-4 px-6 space-y-1 animate-in slide-in-from-top-2 duration-300">
+                        {item.subItems.map((sub) => (
+                          <Link
+                            key={sub.label}
+                            to={sub.path}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 text-display text-[10px] text-primary-foreground/50 hover:text-primary-foreground hover:bg-white/5 transition-all rounded-md uppercase tracking-[0.15em] font-bold"
+                          >
+                            <span className="w-1.5 h-[1.5px] bg-white/20" />
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ) : (
+                    <Link
+                      key={item.label}
+                      to={item.path}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center justify-between px-6 py-4 text-display text-sm font-black text-primary-foreground hover:bg-white/5 transition-all rounded-lg tracking-[0.2em] uppercase group"
+                    >
+                      {item.label}
+                      <ChevronRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-white/40" />
+                    </Link>
+                  )
+                ))}
+              </Accordion>
+            </div>
+
+            <div className="p-6 border-t border-white/5 space-y-8">
+              <div className="space-y-4">
+                <p className="text-[10px] text-white/30 uppercase tracking-[0.3em] font-black italic">Archive Navigation</p>
+                <div className="grid grid-cols-2 gap-3">
+                   <button 
+                     onClick={() => { setSearchOpen(true); setMobileOpen(false); }}
+                     className="flex flex-col items-center justify-center p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-all gap-2"
+                   >
+                     <Search size={18} className="text-white/60" />
+                     <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Search</span>
+                   </button>
+                   <button 
+                     onClick={() => { setIsCartOpen(true); setMobileOpen(false); }}
+                     className="flex flex-col items-center justify-center p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-all gap-2"
+                   >
+                     <ShoppingBag size={18} className="text-white/60" />
+                     <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Bag ({cartCount})</span>
+                   </button>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                 <p className="text-[9px] text-white/20 uppercase tracking-[0.4em] font-bold">© 2024 SIIP ARHIVVE</p>
+              </div>
             </div>
           </div>
         </div>

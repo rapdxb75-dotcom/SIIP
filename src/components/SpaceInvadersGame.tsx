@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Crosshair, Pause, Play } from 'lucide-react';
+import { toast } from 'sonner';
 
 const PixelShipSVG = ({ empty }: { empty?: boolean }) => (
   <svg viewBox="0 0 24 16" width="16" height="12" fill="currentColor" className={empty ? "opacity-30 mix-blend-screen" : "opacity-100"}>
@@ -33,9 +34,12 @@ const SpaceInvadersGame = () => {
   }, []);
 
   useEffect(() => {
+    if (displayState.score > bestScore) {
+      setBestScore(displayState.score);
+    }
+    
     if (displayState.gameOver || displayState.won) {
-      if (displayState.score > bestScore) {
-        setBestScore(displayState.score);
+      if (displayState.score >= bestScore) {
         const date = new Date();
         date.setTime(date.getTime() + (60 * 24 * 60 * 60 * 1000));
         document.cookie = `invadersBestScore=${displayState.score}; expires=${date.toUTCString()}; path=/`;
@@ -471,6 +475,13 @@ const SpaceInvadersGame = () => {
   }, []);
 
   const handleStart = () => {
+    if (displayState.gameOver || displayState.won) {
+      toast.success("SCORE SUBMITTED!", {
+        description: `Your score of ${displayState.score} has been queued for the global leaderboard.`,
+        duration: 3000,
+        className: "bg-black border-white/20 text-white font-display",
+      });
+    }
     initAudio();
     cancelAnimationFrame(animFrameRef.current);
     startGame();
@@ -486,33 +497,44 @@ const SpaceInvadersGame = () => {
       />
 
       {/* HUD / gameplayInfo */}
-      <div className="gameplayInfo absolute top-[calc(6.5rem+env(safe-area-inset-top))] left-0 right-0 pointer-events-none z-10">
-        <div className="container mx-auto px-4 md:px-8 flex justify-between items-start text-display text-xs text-primary-foreground">
-          <div className="flex flex-col gap-1">
-            <span>SCORE: {displayState.score}</span>
-            <span>BEST: {bestScore}</span>
-            <span>LVL {displayState.level}/{MAX_LEVEL}</span>
+      <div className="gameplayInfo absolute top-8 left-0 right-0 pointer-events-none z-10 font-black">
+        <div className="container mx-auto px-4 md:px-8 flex justify-between items-start text-display text-primary-foreground">
+          <div className="flex flex-col gap-1.5 drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] opacity-40 uppercase tracking-widest">Score /</span>
+              <span className="text-sm md:text-base tabular-nums">{displayState.score.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] opacity-40 uppercase tracking-widest">Best /</span>
+              <span className="text-sm md:text-base tabular-nums font-medium opacity-60">{bestScore.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] opacity-40 uppercase tracking-widest">Level /</span>
+              <span className="text-sm md:text-base tabular-nums">{displayState.level}/{MAX_LEVEL}</span>
+            </div>
           </div>
-          <div className="flex flex-col items-end gap-2">
-            <div className="flex gap-2 pointer-events-none mt-1">
+          <div className="flex flex-col items-end gap-3 translate-y-1">
+            <div className="flex gap-2.5 pointer-events-none">
               {[...Array(2)].map((_, i) => (
-                <PixelShipSVG key={i} empty={i >= displayState.lives} />
+                <div key={i} className="drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
+                   <PixelShipSVG empty={i >= displayState.lives} />
+                </div>
               ))}
             </div>
-            <div className="flex gap-3 mt-1">
+            <div className="flex items-center gap-4 mt-2">
               <button
                 onClick={togglePause}
-                className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity flex items-center gap-1"
+                className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity flex items-center gap-1.5 uppercase font-black"
               >
-                {isManuallyPaused ? <Play size={10} /> : <Pause size={10} />}
-                {isManuallyPaused ? 'PLAY' : 'PAUSE'}
+                {isManuallyPaused ? <Play size={10} fill="currentColor" /> : <Pause size={10} fill="currentColor" />}
+                {isManuallyPaused ? 'Resume' : 'Pause'}
               </button>
               <button
-              onClick={toggleSound}
-              className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity"
-            >
-              {soundOn ? '♪ ON' : '♪ OFF'}
-            </button>
+                onClick={toggleSound}
+                className="pointer-events-auto text-[10px] opacity-40 hover:opacity-100 transition-opacity uppercase font-black"
+              >
+                {soundOn ? '♪ ON' : '♪ OFF'}
+              </button>
             </div>
           </div>
         </div>
@@ -537,7 +559,7 @@ const SpaceInvadersGame = () => {
             className="pixel-border border-primary-foreground text-primary-foreground text-display px-6 py-2 text-sm hover:bg-primary-foreground hover:text-primary transition-colors"
             style={{ boxShadow: '2px 2px 0px rgba(255,255,255,0.5)' }}
           >
-            {displayState.gameOver || displayState.won ? 'PLAY AGAIN' : 'START'}
+            {displayState.gameOver || displayState.won ? 'Submit score' : 'Play now'}
           </button>
 
           {!isMobile ? (
