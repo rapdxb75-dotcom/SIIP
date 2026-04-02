@@ -11,11 +11,11 @@ const NewsletterSection = () => {
           {/* Main Title */}
           <div className="space-y-6">
             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-tight text-display">
-              Be first to know<span className="text-blue-500">.</span>
+              ART MEETS <br /> ACTIVISM<span className="text-blue-500">.</span>
             </h2>
             <div className="h-0.5 w-16 bg-white/20 mx-auto" />
-            <p className="text-white/60 text-base md:text-xl font-bold tracking-tight text-display max-w-2xl mx-auto">
-              Drops, game results, exclusive access.
+            <p className="text-white/60 text-base md:text-xl font-bold tracking-tight text-display max-w-2xl mx-auto italic">
+              Subscribe for #NWPR collection updates, exclusive arcade results, and archival access.
             </p>
           </div>
 

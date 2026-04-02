@@ -7,7 +7,7 @@ import { useCart } from '../context/CartContext';
 import { Dialog, DialogContent, DialogTrigger } from '../components/ui/dialog';
 import { products } from '../lib/products';
 
-const categories = ['ALL', 'TEES', 'HOODIES', 'JACKETS', 'ACCESSORIES'];
+const categories = ['ALL', ...new Set(products.map(p => p.category))];
 
 const ProductCard = ({ product, addToCart }: { product: any, addToCart: any }) => {
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -222,9 +222,9 @@ const ProductCard = ({ product, addToCart }: { product: any, addToCart: any }) =
                         <h3 className="text-display text-[11px] md:text-xs font-bold uppercase tracking-wider text-foreground/90">{product.name}</h3>
                         <span className="text-display text-[11px] md:text-xs font-bold tracking-tight">{product.price}</span>
                     </div>
-                    <div className="flex justify-between items-center">
-                        <p className="text-[10px] text-muted-foreground tracking-[0.15em] font-medium">{product.category}</p>
-                        {product.originalPrice && <span className="text-[10px] text-muted-foreground/60 line-through tracking-tighter">{product.originalPrice}</span>}
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-[10px] text-muted-foreground tracking-[0.1em] font-medium leading-relaxed italic">{product.description}</p>
+                        <p className="text-[9px] text-muted-foreground/50 tracking-[0.2em] font-black uppercase">{product.category}</p>
                     </div>
                 </Link>
             </div>

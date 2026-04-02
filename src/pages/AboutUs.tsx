@@ -25,8 +25,8 @@ const AboutUs = () => {
             <h1 className="text-display text-4xl md:text-7xl font-black mb-6 tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-8 duration-700">
               SAY IT IN <span className="text-primary italic italic">PRINT</span><span className="opacity-30">.</span>
             </h1>
-            <p className="text-body text-lg md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-              Born from friendship, creativity, and conviction.
+            <p className="text-body text-lg md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 uppercase tracking-widest italic">
+              Art as a voice. #NWPR as a movement.
             </p>
           </div>
 

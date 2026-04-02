@@ -2,36 +2,8 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-
-import img1 from '../assets/1.png';
-import img2 from '../assets/2.png';
-import img3 from '../assets/3.png';
-import img4 from '../assets/4.png';
-import img5 from '../assets/5.png';
-import img6 from '../assets/6.png';
-import img7 from '../assets/7.png';
-import img8 from '../assets/8.png';
-
-// Import new product images and their hover versions
-import p1_main from '../assets/product_1 (2).png';
-import p1_hover from '../assets/product_1_2.png';
-import p2_main from '../assets/product_2.png';
-import p2_hover from '../assets/product_2_2.png';
-import p3_main from '../assets/product_3.png';
-import p3_hover from '../assets/product_3_3.png';
-import p4_main from '../assets/product_4.png';
-import p4_hover from '../assets/product_4_4.png';
-
-const products = [
-  { id: 1, name: 'SIIP CLASSIC TEE', price: '$48', originalPrice: '$65', tag: 'NEW', image: p1_main, hoverImage: p1_hover },
-  { id: 2, name: 'URBAN HOODIE', price: '$89', originalPrice: '$110', tag: 'BEST', image: p2_main, hoverImage: p2_hover },
-  { id: 3, name: 'HERITAGE CAP', price: '$32', originalPrice: '$45', tag: null, image: p3_main, hoverImage: p3_hover },
-  { id: 4, name: 'SIIP ARCHIVE JACKET', price: '$120', originalPrice: '$155', tag: 'LTD', image: p4_main, hoverImage: p4_hover },
-  { id: 5, name: 'GLITCH PANTS', price: '$72', originalPrice: '$95', tag: null, image: img5 },
-  { id: 6, name: 'BYTE SOCKS', price: '$18', originalPrice: '$25', tag: 'NEW', image: img6 },
-  { id: 7, name: 'CTRL BELT', price: '$35', originalPrice: '$49', tag: null, image: img7 },
-  { id: 8, name: 'NEON SLIDES', price: '$55', originalPrice: '$80', tag: 'NEW', image: img8 },
-];
+import { products } from '../lib/products';
+import { Link } from 'react-router-dom';
 
 const ProductGrid = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -69,7 +41,7 @@ const ProductGrid = () => {
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
           <div className="max-w-2xl animate-in fade-in slide-in-from-left-8 duration-1000">
             <p className="text-display text-[10px] md:text-xs tracking-[0.4em] text-white/40 mb-4 uppercase font-bold italic leading-relaxed">
-              No War for Favour. Art meets activism. <span className="text-white/60">Limited first drop.</span>
+              No War por Favor. Art meets activism. <span className="text-white/60">#NWPR Limited drop.</span>
             </p>
             <h2 className="text-display text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
               THE SIIP <br /> ARCHIVE<span className="text-blue-500">.</span>
@@ -105,21 +77,23 @@ const ProductGrid = () => {
                 className="flex-[0_0_calc(85%-12px)] sm:flex-[0_0_calc(45%-16px)] lg:flex-[0_0_calc(25%-24px)] group"
               >
                 <div className="relative aspect-[4/5] bg-white/[0.03] border border-white/5 overflow-hidden group/card shadow-2xl rounded-[2px]">
-                  {/* Main Product Image with subtle zoom */}
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className={`w-full h-full object-cover object-center transition-all duration-1000 ${product.hoverImage ? 'group-hover:opacity-0 group-hover:scale-110' : 'group-hover:scale-110'}`} 
-                  />
-                  
-                  {/* Hover Image for discovery */}
-                  {product.hoverImage && (
+                  <Link to={`/product/${product.id}`}>
+                    {/* Main Product Image with subtle zoom */}
                     <img 
-                      src={product.hoverImage} 
-                      alt={`${product.name} alternate view`} 
-                      className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-all duration-1000" 
+                      src={product.image} 
+                      alt={product.name} 
+                      className={`w-full h-full object-cover object-center transition-all duration-1000 ${product.hoverImage ? 'group-hover:opacity-0 group-hover:scale-110' : 'group-hover:scale-110'}`} 
                     />
-                  )}
+                    
+                    {/* Hover Image for discovery */}
+                    {product.hoverImage && (
+                      <img 
+                        src={product.hoverImage} 
+                        alt={`${product.name} alternate view`} 
+                        className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-all duration-1000" 
+                      />
+                    )}
+                  </Link>
 
                   {/* Top Tag */}
                   {product.tag && (
@@ -159,7 +133,7 @@ const ProductGrid = () => {
                          onClick={(e) => {
                            e.stopPropagation();
                            if (selectedSizes[product.id]) {
-                              addToCart({ ...product, size: selectedSizes[product.id] });
+                               addToCart({ ...product, size: selectedSizes[product.id] });
                            }
                          }}
                          disabled={!selectedSizes[product.id]}
@@ -177,9 +151,14 @@ const ProductGrid = () => {
 
                 {/* Product Info - Minimalist Display */}
                 <div className="mt-6 flex flex-col items-start space-y-2">
-                  <h3 className="text-display text-xs md:text-sm font-black uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
-                    {product.name}
-                  </h3>
+                  <div className="flex flex-col items-start space-y-1">
+                    <h3 className="text-display text-xs md:text-sm font-black uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
+                      {product.name}
+                    </h3>
+                    <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest text-display line-clamp-1 italic">
+                      {product.description}
+                    </p>
+                  </div>
                   <div className="flex items-center gap-3">
                     <span className="text-white text-base md:text-lg font-bold tracking-tighter">
                       {product.price}

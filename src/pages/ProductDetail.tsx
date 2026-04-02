@@ -149,19 +149,13 @@ const ProductDetail = () => {
             <div className="space-y-6 mb-12">
               <div className="flex items-center justify-between">
                 <p className="text-display text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em]">Available Sizes</p>
-                <button 
-                  onClick={() => {
-                    setAccordionValue('sizing');
-                    const element = document.getElementById('product-specs');
-                    if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                  }}
+                <Link 
+                  to="/size-guide"
                   className="text-[10px] md:text-[11px] font-black uppercase underline underline-offset-4 tracking-widest opacity-60 hover:opacity-100 flex items-center gap-2 group transition-all"
                 >
                   <Ruler size={14} className="group-hover:scale-125 transition-transform" />
                   Size guide
-                </button>
+                </Link>
               </div>
               <div className="flex flex-wrap gap-3">
                 {sizes.map((size) => (
